@@ -2,8 +2,8 @@ import { generateRandomToken } from "@/data-access/utils";
 import { resetTokens } from "@/db/schema";
 import { UserId } from "@/use-cases/types";
 import { eq } from "drizzle-orm";
-import { TOKEN_LENGTH, TOKEN_TTL } from "./magic-links";
 import { db } from "@/db";
+import { TOKEN_LENGTH, TOKEN_TTL } from "@/core/constants/token-length";
 
 export async function createPasswordResetToken(userId: UserId) {
   const token = await generateRandomToken(TOKEN_LENGTH);

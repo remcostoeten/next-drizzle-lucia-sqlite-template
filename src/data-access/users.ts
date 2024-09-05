@@ -4,9 +4,7 @@ import { eq } from "drizzle-orm";
 import crypto from "crypto";
 import { UserId } from "@/use-cases/types";
 import { getAccountByUserId } from "@/data-access/accounts";
-
-const ITERATIONS = 10000;
-const MAGIC_LINK_TOKEN_TTL = 1000 * 60 * 5; // 5 min
+import { ITERATIONS } from "@/core/constants/token-length";
 
 export async function deleteUser(userId: UserId) {
   await db.delete(users).where(eq(users.id, userId));
@@ -46,26 +44,6 @@ export async function createUser(email: string) {
   return user;
 }
 
-export async function createMagicUser(email: string) {
-  const [user] = await db
-    .insert(users)
-    .values({
-      email,
-      emailVerified: new Date(),
-    })
-    .returning();
-
-  await db
-    .insert(accounts)
-    .values({
-      userId: user.id,
-      accountType: "email",
-    })
-    .returning();
-
-  return user;
-}
-
 export async function verifyPassword(email: string, plainTextPassword: string) {
   const user = await getUserByEmail(email);
 
@@ -96,23 +74,6 @@ export async function getUserByEmail(email: string) {
   });
 
   return user;
-}
-
-export async function getMagicUserAccountByEmail(email: string) {
-  const user = await db.query.users.findFirst({
-    where: eq(users.email, email),
-  });
-
-  return user;
-}
-
-export async function setEmailVerified(userId: UserId) {
-  await db
-    .update(users)
-    .set({
-      emailVerified: new Date(),
-    })
-    .where(eq(users.id, userId));
 }
 
 export async function updateUser(userId: UserId, updatedUser: Partial<User>) {

@@ -22,12 +22,6 @@ export const accounts = sqliteTable("accounts", {
   salt: text("salt"),
 });
 
-export const magicLinks = sqliteTable("magic_links", {
-  id: integer("id", { mode: "number" }).primaryKey({ autoIncrement: true }),
-  email: text("email").notNull().unique(),
-  token: text("token"),
-  tokenExpiresAt: integer("token_expires_at", { mode: "timestamp" }).notNull(),
-});
 
 export const resetTokens = sqliteTable("reset_tokens", {
   id: integer("id", { mode: "number" }).primaryKey({ autoIncrement: true }),

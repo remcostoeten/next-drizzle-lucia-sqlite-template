@@ -1,7 +1,9 @@
+
 import { env } from "@/env";
 import { assertAuthenticated } from "@/lib/session";
 import { createServerActionProcedure } from "zsa";
 import { PublicError } from "../use-cases/errors";
+import error from "@/app/error";
 
 function shapeErrors({ err }: any) {
   const isAllowedError = err instanceof PublicError;

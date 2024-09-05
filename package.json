@@ -4,7 +4,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev --turbo",
+    "rebuild": "rm -rf .next  && rm -rf node_modules &&  bun i && bun run build",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
