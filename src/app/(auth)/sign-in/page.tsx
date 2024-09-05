@@ -19,9 +19,7 @@ export default function SignInPage() {
           <Link
             href="/api/login/google"
             className={cn(
-              buttonVariants({
-                variant: "secondary",
-              }),
+              buttonVariants({ variant: "secondary" }),
               "w-full"
             )}
           >
@@ -31,9 +29,7 @@ export default function SignInPage() {
           <Link
             href="/api/login/github"
             className={cn(
-              buttonVariants({
-                variant: "secondary",
-              }),
+              buttonVariants({ variant: "secondary" }),
               "w-full"
             )}
           >
@@ -53,9 +49,9 @@ export default function SignInPage() {
           </div>
 
           <div className="flex justify-center">
-            <Button variant="outline">
-              <Link href="/sign-in/email">
-                <MailIcon /> Sign in with Email
+            <Button variant="outline" className="w-full">
+              <Link href="/sign-in/email" className="flex items-center gap-4">
+                <MailIcon /> <span>Sign in with Email</span>
               </Link>
             </Button>
           </div>

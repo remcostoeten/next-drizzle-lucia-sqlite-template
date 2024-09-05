@@ -18,6 +18,13 @@ export class EmailInUseError extends PublicError {
   }
 }
 
+export class UsernameInUseError extends PublicError {
+  constructor() {
+    super("Username is already in use");
+    this.name = "UsernameInUseError";
+  }
+}
+
 export class NotFoundError extends PublicError {
   constructor() {
     super("Resource not found");
@@ -34,7 +41,7 @@ export class TokenExpiredError extends PublicError {
 
 export class LoginError extends PublicError {
   constructor() {
-    super("Invalid email or password");
+    super("Invalid email, username, or password");
     this.name = "LoginError";
   }
 }

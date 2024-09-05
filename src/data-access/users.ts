@@ -4,7 +4,7 @@ import { User, users } from "@/core/server/db/schema";
 import { getAccountByUserId } from "@/data-access/accounts";
 import { UserId } from "@/use-cases/types";
 import crypto from "crypto";
-import { eq } from "drizzle-orm";
+import { eq, or } from "drizzle-orm";
 
 export async function deleteUser(userId: UserId) {
   await db.delete(users).where(eq(users.id, userId));
@@ -34,24 +34,19 @@ async function hashPassword(plainTextPassword: string, salt: string) {
   });
 }
 
-export async function createUser(email: string) {
+export async function createUser(email: string, username: string) {
   const [user] = await db
     .insert(users)
     .values({
       email,
+      username,
     })
     .returning();
   return user;
 }
 
-export async function verifyPassword(email: string, plainTextPassword: string) {
-  const user = await getUserByEmail(email);
-
-  if (!user) {
-    return false;
-  }
-
-  const account = await getAccountByUserId(user.id);
+export async function verifyPassword(userId: UserId, plainTextPassword: string) {
+  const account = await getAccountByUserId(userId);
 
   if (!account) {
     return false;
@@ -71,6 +66,22 @@ export async function verifyPassword(email: string, plainTextPassword: string) {
 export async function getUserByEmail(email: string) {
   const user = await db.query.users.findFirst({
     where: eq(users.email, email),
+  });
+
+  return user;
+}
+
+export async function getUserByEmailOrUsername(identifier: string) {
+  const user = await db.query.users.findFirst({
+    where: or(eq(users.email, identifier), eq(users.username, identifier)),
+  });
+
+  return user;
+}
+
+export async function getUserByUsername(username: string) {
+  const user = await db.query.users.findFirst({
+    where: eq(users.username, username),
   });
 
   return user;

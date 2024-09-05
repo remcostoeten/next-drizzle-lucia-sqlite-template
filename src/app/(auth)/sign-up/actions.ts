@@ -13,12 +13,28 @@ export const signUpAction = unauthenticatedAction
   .input(
     z.object({
       email: z.string().email(),
+      username: z.string().min(3),
       password: z.string().min(8),
     }),
   )
   .handler(async ({ input }) => {
     await rateLimitByIp({ key: "register", limit: 3, window: 30000 });
-    const user = await registerUserUseCase(input.email, input.password);
+    const user = await registerUserUseCase(input.email, input.username, input.password);
+    await setSession(user.id);
+    return redirect(afterLoginUrl);
+  });
+
+export const signInAction = unauthenticatedAction
+  .createServerAction()
+  .input(
+    z.object({
+      identifier: z.string(), // This can be either email or username
+      password: z.string(),
+    }),
+  )
+  .handler(async ({ input }) => {
+    await rateLimitByIp({ key: "signin", limit: 5, window: 60000 });
+    const user = await authenticateUserUseCase(input.identifier, input.password);
     await setSession(user.id);
     return redirect(afterLoginUrl);
   });

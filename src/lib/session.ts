@@ -22,12 +22,16 @@ export const assertAuthenticated = async () => {
   return user;
 };
 
-export async function setSession(userId: UserId) {
+export async function setSession(userId: UserId, rememberMe: boolean = false) {
+  const expiresIn = rememberMe ? 30 * 24 * 60 * 60 : 24 * 60 * 60; // 30 days or 1 day in seconds
   const session = await lucia.createSession(userId, {});
   const sessionCookie = lucia.createSessionCookie(session.id);
   cookies().set(
     sessionCookie.name,
     sessionCookie.value,
-    sessionCookie.attributes,
+    {
+      ...sessionCookie.attributes,
+      maxAge: expiresIn
+    }
   );
 }

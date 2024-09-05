@@ -7,6 +7,7 @@ const sqliteTable = sqliteTableCreator((name) => `app_${name}`);
 export const users = sqliteTable("user", {
   id: integer("id", { mode: "number" }).primaryKey({ autoIncrement: true }),
   email: text("email").unique(),
+  username: text("username").unique(),
 });
 
 export const accounts = sqliteTable("accounts", {
@@ -21,7 +22,6 @@ export const accounts = sqliteTable("accounts", {
   password: text("password"),
   salt: text("salt"),
 });
-
 
 export const resetTokens = sqliteTable("reset_tokens", {
   id: integer("id", { mode: "number" }).primaryKey({ autoIncrement: true }),

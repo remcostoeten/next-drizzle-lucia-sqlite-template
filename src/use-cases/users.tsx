@@ -17,7 +17,10 @@ import {
 import {
   createUser,
   deleteUser,
-  getUserByEmail, verifyPassword
+  getUserByEmail,
+  getUserByEmailOrUsername,
+  getUserByUsername,
+  verifyPassword
 } from "@/data-access/users";
 import { createTransaction } from "@/data-access/utils";
 import { sendEmail } from "@/lib/email";
@@ -26,6 +29,7 @@ import { UserId, UserSession } from "@/use-cases/types";
 import {
   AuthenticationError,
   EmailInUseError,
+  UsernameInUseError,
   LoginError,
   NotFoundError,
 } from "./errors";
@@ -51,27 +55,32 @@ export async function getUserProfileUseCase(userId: UserId) {
   return profile;
 }
 
-export async function registerUserUseCase(email: string, password: string) {
-  const existingUser = await getUserByEmail(email);
-  if (existingUser) {
+export async function registerUserUseCase(email: string, username: string, password: string) {
+  const existingUserByEmail = await getUserByEmail(email);
+  if (existingUserByEmail) {
     throw new EmailInUseError();
   }
 
-  const user = await createUser(email);
+  const existingUserByUsername = await getUserByUsername(username);
+  if (existingUserByUsername) {
+    throw new UsernameInUseError();
+  }
+
+  const user = await createUser(email, username);
   await createAccount(user.id, password);
-  await createProfile(user.id, generateRandomName());
+  await createProfile(user.id, username);
 
   return { id: user.id };
 }
 
-export async function signInUseCase(email: string, password: string) {
-  const user = await getUserByEmail(email);
+export async function signInUseCase(input: { identifier: string; password: string }) {
+  const user = await getUserByEmailOrUsername(input.identifier);
 
   if (!user) {
     throw new LoginError();
   }
 
-  const isPasswordCorrect = await verifyPassword(email, password);
+  const isPasswordCorrect = await verifyPassword(user.id, input.password);
 
   if (!isPasswordCorrect) {
     throw new LoginError();
@@ -84,7 +93,7 @@ export async function createGithubUserUseCase(githubUser: GitHubUser) {
   let existingUser = await getUserByEmail(githubUser.email);
 
   if (!existingUser) {
-    existingUser = await createUser(githubUser.email);
+    existingUser = await createUser(githubUser.email, githubUser.login);
   }
 
   await createAccountViaGithub(existingUser.id, githubUser.id);
@@ -98,7 +107,7 @@ export async function createGoogleUserUseCase(googleUser: GoogleUser) {
   let existingUser = await getUserByEmail(googleUser.email);
 
   if (!existingUser) {
-    existingUser = await createUser(googleUser.email);
+    existingUser = await createUser(googleUser.email, generateRandomName());
   }
 
   await createAccountViaGoogle(existingUser.id, googleUser.sub);
@@ -138,4 +147,3 @@ export async function changePasswordUseCase(token: string, password: string) {
     await updatePassword(userId, password, trx);
   });
 }
-

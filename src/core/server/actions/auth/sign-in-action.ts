@@ -8,18 +8,18 @@ import { signInUseCase } from "@/use-cases/users";
 import { redirect } from "next/navigation";
 import { z } from "zod";
 
-export const signInActioan = unauthenticatedAction
+export const signInAction = unauthenticatedAction
   .createServerAction()
   .input(
     z.object({
-      email: z.string().email(),
-      password: z.string().min(8),
+      identifier: z.string().min(1, "Email or username is required"),
+      password: z.string().min(8, "Password must be at least 8 characters"),
+      rememberMe: z.boolean().default(false),
     }),
   )
   .handler(async ({ input }) => {
-    await rateLimitByKey({ key: input.email, limit: 3, window: 10000 });
-    const user = await signInUseCase(input.email, input.password);
-    await setSession(user.id);
+    await rateLimitByKey({ key: input.identifier, limit: 3, window: 10000 });
+    const user = await signInUseCase({ identifier: input.identifier, password: input.password });
+    await setSession(user.id, input.rememberMe);
     redirect(afterLoginUrl);
   });
-

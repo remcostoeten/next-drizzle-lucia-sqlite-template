@@ -28,13 +28,17 @@ const config = {
         mono: ['var(--font-geist-mono)'],
       },
       colors: {
-        // custom colors
+        // Custom colors
         brand: 'var(--primary)',
         'brand--darker': 'var(--primary-darker)',
-        'dark': 'var(--dark-bg)',
+        dark: 'var(--dark-bg)',
         'dark--lighter': 'var(--dark-bg--lighter)',
+        'dark--section': 'var(--dark-section)',
+        'dark--section--lighter': 'var(--dark-section--lighter)',
 
-        border: "hsl(var(--border))",
+        // Borders
+        border: 'var(--border)',
+        'border-alt': 'var(--seperator)',
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
@@ -93,7 +97,10 @@ const config = {
       },
     },
   },
-  plugins: [require("tailwindcss-animate"), require("@tailwindcss/typography")],
+  plugins: [
+    require("tailwindcss-animate"),
+    require("@tailwindcss/typography"),
+  ],
 };
 
 export default config;
