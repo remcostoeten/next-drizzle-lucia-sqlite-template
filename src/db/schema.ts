@@ -7,7 +7,6 @@ const sqliteTable = sqliteTableCreator((name) => `app_${name}`);
 export const users = sqliteTable("user", {
   id: integer("id", { mode: "number" }).primaryKey({ autoIncrement: true }),
   email: text("email").unique(),
-  emailVerified: integer("email_verified", { mode: "timestamp" }),
 });
 
 export const accounts = sqliteTable("accounts", {
@@ -31,16 +30,6 @@ export const magicLinks = sqliteTable("magic_links", {
 });
 
 export const resetTokens = sqliteTable("reset_tokens", {
-  id: integer("id", { mode: "number" }).primaryKey({ autoIncrement: true }),
-  userId: integer("user_id", { mode: "number" })
-    .references(() => users.id, { onDelete: "cascade" })
-    .unique()
-    .notNull(),
-  token: text("token"),
-  tokenExpiresAt: integer("token_expires_at", { mode: "timestamp" }).notNull(),
-});
-
-export const verifyEmailTokens = sqliteTable("verify_email_tokens", {
   id: integer("id", { mode: "number" }).primaryKey({ autoIncrement: true }),
   userId: integer("user_id", { mode: "number" })
     .references(() => users.id, { onDelete: "cascade" })

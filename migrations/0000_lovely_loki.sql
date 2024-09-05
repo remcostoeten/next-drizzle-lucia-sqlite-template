@@ -44,7 +44,7 @@ CREATE TABLE `app_session` (
 CREATE TABLE `app_user` (
 	`id` integer PRIMARY KEY AUTOINCREMENT NOT NULL,
 	`email` text,
-	`email_verified` integer
+	`Fv` integer
 );
 --> statement-breakpoint
 CREATE TABLE `app_verify_email_tokens` (

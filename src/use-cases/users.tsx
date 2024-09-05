@@ -70,13 +70,6 @@ export async function registerUserUseCase(email: string, password: string) {
   await createAccount(user.id, password);
   await createProfile(user.id, generateRandomName());
 
-  const token = await createVerifyEmailToken(user.id);
-  await sendEmail(
-    email,
-    `Verify your email for ${applicationName}`,
-    <VerifyEmail token={token} />,
-  );
-
   return { id: user.id };
 }
 
@@ -155,16 +148,3 @@ export async function changePasswordUseCase(token: string, password: string) {
   });
 }
 
-export async function verifyEmailUseCase(token: string) {
-  const tokenEntry = await getVerifyEmailToken(token);
-
-  if (!tokenEntry) {
-    throw new AuthenticationError();
-  }
-
-  const userId = tokenEntry.userId;
-
-  await updateUser(userId, { emailVerified: new Date() });
-  await deleteVerifyEmailToken(token);
-  return userId;
-}

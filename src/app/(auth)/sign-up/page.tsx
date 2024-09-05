@@ -32,7 +32,6 @@ const registrationSchema = z
     message: "Passwords don't match",
     path: ["passwordConfirmation"],
   });
-
 export default function RegisterPage() {
   const { toast } = useToast();
 

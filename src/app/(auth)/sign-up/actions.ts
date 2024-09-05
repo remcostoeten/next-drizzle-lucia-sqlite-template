@@ -1,7 +1,7 @@
 "use server";
 
 import { afterLoginUrl } from "@/app-config";
-import { rateLimitByIp, rateLimitByKey } from "@/lib/limiter";
+import { rateLimitByIp } from "@/lib/limiter";
 import { unauthenticatedAction } from "@/lib/safe-action";
 import { setSession } from "@/lib/session";
 import { registerUserUseCase } from "@/use-cases/users";
