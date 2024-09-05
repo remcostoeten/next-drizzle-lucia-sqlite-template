@@ -1,22 +1,27 @@
 $dark-theme: (
-  "foreground": 0 0% 98%,
-  "card": 0 0% 3.9%,
-  "card-foreground": 0 0% 98%,
-  "popover": 0 0% 3.9%,
-  "popover-foreground": 0 0% 98%,
-  "primary": #ff6c00,
-  "primary-foreground": 0 0% 9%,
-  "secondary": 0 0% 14.9%,
-  "secondary-foreground": 0 0% 98%,
-  "accent-foreground": 0 0% 98%,
-  "destructive": 0 62.8% 30.6%,
-  "destructive-foreground": 0 0% 98%,
-  "ring": 0 0% 83.1%,
-  "chart-1": 220 70% 50%,
-  "chart-2": 160 60% 45%,
-  "chart-3": 30 80% 55%,
-  "chart-4": 280 65% 60%,
-  "chart-5": 340 75% 55%,
+  "brand": #ff6c00,
+  "primary--alt": #ff6c00,
+  "primary--darker": rgb(255, 91, 0),
+  "error": #ff4949,
+  "success": #2cffd1,
+
+  // dark theme colors
+  "dark-bg": #040404,
+  "dark-bg--lighter": #161616,
+  // footer
+  "dark-section": #0c0c0c,
+  // cards, alt-sections
+  "dark-section--lighter": #131313,
+
+  // bg-card-alt, bg-section-alt
+  // bg for card for example
+  "body-gradient": linear-gradient(256.59deg, #000 23.98%, #171616 100.35%),
+  // Border color
+  "seperator": #131313,
+  "border": #252525,
+  // text-colors
+  "muted": #909090,
+  "white": #f3f3f3,
 );
 
 @mixin apply-dark-theme {

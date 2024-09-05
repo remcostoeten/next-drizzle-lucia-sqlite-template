@@ -10,7 +10,6 @@ import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { LoaderButton } from "@/components/loader-button"
-import { cn } from "@/lib/utils"
 import { Terminal, Github, Mail } from "lucide-react"
 import Link from "next/link"
 import { signUpAction } from "./actions"
@@ -53,7 +52,7 @@ export default function SignUpPage() {
   }
 
   return (
-      <div className="w-full  mx-auto max-w-md space-y-8 p-8 bg-dark--section border border-dark">
+      <div className="w-full  mx-auto max-w-md space-y-8 p-8 bg-dark--section border border-bord  er">
         <div className="text-center">
           <h1 className="text-3xl font-bold text-white mb-2">Create an account</h1>
           <p className="text-zinc-400">Enter your details to get started</p>

@@ -1,6 +1,8 @@
 export type UserProfile = {
   id: UserId;
-  name: string | null;
+  username: string;
+  displayName: string;
+  bio: string | null;
   image: string | null;
 };
 
