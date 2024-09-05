@@ -1,5 +1,5 @@
-import { db } from "@/db";
-import { Profile, profiles } from "@/db/schema";
+import { db } from "@/core/server/db";
+import { Profile, profiles } from "@/core/server/db/schema";
 import { UserId } from "@/use-cases/types";
 import { eq } from "drizzle-orm";
 

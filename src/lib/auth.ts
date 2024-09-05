@@ -1,13 +1,11 @@
-import { GitHub, Google } from "arctic";
-import { Lucia } from "lucia";
-import { DrizzleSQLiteAdapter } from "@lucia-auth/adapter-drizzle";
-import { db } from "@/db";
-import { sessions, users } from "@/db/schema";
-import { cookies } from "next/headers";
-import { User } from "lucia";
-import { Session } from "lucia";
+import { db } from "@/core/server/db";
+import { sessions, users } from "@/core/server/db/schema";
 import { env } from "@/env";
 import { UserId as CustomUserId } from "@/types";
+import { DrizzleSQLiteAdapter } from "@lucia-auth/adapter-drizzle";
+import { GitHub, Google } from "arctic";
+import { Lucia, Session, User } from "lucia";
+import { cookies } from "next/headers";
 
 const adapter = new DrizzleSQLiteAdapter(db, sessions, users);
 

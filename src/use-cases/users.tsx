@@ -1,11 +1,7 @@
-import {
-  createUser,
-  deleteUser,
-  getUserByEmail,
-  updateUser,
-  verifyPassword,
-} from "@/data-access/users";
-import { UserId, UserSession } from "@/use-cases/types";
+import { applicationName } from "@/app-config";
+import { GitHubUser } from "@/app/api/login/github/callback/route";
+import { GoogleUser } from "@/app/api/login/google/callback/route";
+import { ResetPasswordEmail } from "@/core/config/emails/reset-password";
 import {
   createAccount,
   createAccountViaGithub,
@@ -13,31 +9,26 @@ import {
   updatePassword,
 } from "@/data-access/accounts";
 import { createProfile, getProfile } from "@/data-access/profiles";
-import { GoogleUser } from "@/app/api/login/google/callback/route";
-import { GitHubUser } from "@/app/api/login/github/callback/route";
 import {
   createPasswordResetToken,
   deletePasswordResetToken,
   getPasswordResetToken,
 } from "@/data-access/reset-tokens";
-import { ResetPasswordEmail } from "@/emails/reset-password";
 import {
-  createVerifyEmailToken,
-  deleteVerifyEmailToken,
-  getVerifyEmailToken,
-} from "@/data-access/verify-email";
-import { VerifyEmail } from "@/emails/verify-email";
-import { applicationName } from "@/app-config";
+  createUser,
+  deleteUser,
+  getUserByEmail, verifyPassword
+} from "@/data-access/users";
+import { createTransaction } from "@/data-access/utils";
 import { sendEmail } from "@/lib/email";
 import { generateRandomName } from "@/lib/names";
+import { UserId, UserSession } from "@/use-cases/types";
 import {
   AuthenticationError,
   EmailInUseError,
   LoginError,
   NotFoundError,
 } from "./errors";
-import { db } from "@/db";
-import { createTransaction } from "@/data-access/utils";
 
 export async function deleteUserUseCase(
   authenticatedUser: UserSession,

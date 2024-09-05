@@ -1,10 +1,9 @@
-import { db } from "@/db";
-import { accounts } from "@/db/schema";
+import { ITERATIONS } from "@/core/constants/token-length";
+import { db } from "@/core/server/db";
+import { accounts } from "@/core/server/db/schema";
 import { UserId } from "@/use-cases/types";
-import { and, eq } from "drizzle-orm";
 import crypto from "crypto";
-
-const ITERATIONS = 10000;
+import { and, eq } from "drizzle-orm";
 
 async function hashPassword(plainTextPassword: string, salt: string) {
   return new Promise<string>((resolve, reject) => {

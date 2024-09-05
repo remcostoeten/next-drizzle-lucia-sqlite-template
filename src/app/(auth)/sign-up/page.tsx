@@ -25,6 +25,7 @@ import { signUpAction } from "./actions";
 const registrationSchema = z
   .object({
     email: z.string().email(),
+    username: z.string().min(3),
     password: z.string().min(8),
     passwordConfirmation: z.string().min(8),
   })
@@ -32,6 +33,7 @@ const registrationSchema = z
     message: "Passwords don't match",
     path: ["passwordConfirmation"],
   });
+
 export default function RegisterPage() {
   const { toast } = useToast();
 
@@ -48,6 +50,7 @@ export default function RegisterPage() {
   const form = useForm<z.infer<typeof registrationSchema>>({
     resolver: zodResolver(registrationSchema),
     defaultValues: {
+      username: "",
       email: "",
       password: "",
       passwordConfirmation: "",
@@ -85,6 +88,25 @@ export default function RegisterPage() {
 
           <FormField
             control={form.control}
+            name="username"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Username</FormLabel>
+                <FormControl>
+                  <Input
+                    {...field}
+                    className="w-full"
+                    placeholder="Enter your username"
+                    type="text"
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
             name="password"
             render={({ field }) => (
               <FormItem>
@@ -112,7 +134,7 @@ export default function RegisterPage() {
                   <Input
                     {...field}
                     className="w-full"
-                    placeholder="Enter Confirm your Password"
+                    placeholder="Confirm your password"
                     type="password"
                   />
                 </FormControl>

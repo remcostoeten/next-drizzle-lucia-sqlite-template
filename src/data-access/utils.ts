@@ -1,4 +1,4 @@
-import { db } from "@/db";
+import { db } from "@/core/server/db";
 import crypto from "crypto";
 
 export async function generateRandomToken(length: number) {

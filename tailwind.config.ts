@@ -24,9 +24,16 @@ const config = {
         plus: "url('/plus.svg')",
       },
       fontFamily: {
-        sans: ["var(--font-sans)", ...fontFamily.sans],
+        sans: ['var(--font-geist-sans)'],
+        mono: ['var(--font-geist-mono)'],
       },
       colors: {
+        // custom colors
+        brand: 'var(--primary)',
+        'brand--darker': 'var(--primary-darker)',
+        'dark': 'var(--dark-bg)',
+        'dark--lighter': 'var(--dark-bg--lighter)',
+
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",

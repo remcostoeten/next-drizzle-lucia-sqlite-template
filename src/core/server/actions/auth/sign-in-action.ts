@@ -8,7 +8,7 @@ import { signInUseCase } from "@/use-cases/users";
 import { redirect } from "next/navigation";
 import { z } from "zod";
 
-export const signInAction = unauthenticatedAction
+export const signInActioan = unauthenticatedAction
   .createServerAction()
   .input(
     z.object({
@@ -22,3 +22,4 @@ export const signInAction = unauthenticatedAction
     await setSession(user.id);
     redirect(afterLoginUrl);
   });
+

@@ -14,13 +14,13 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
+import { resetPasswordAction } from "@/core/server/actions";
 import { cn } from "@/lib/utils";
 import { pageTitleStyles } from "@/style/common";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Terminal } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { useServerAction } from "zsa-react";
-import { resetPasswordAction } from "./actions";
 
 const registrationSchema = z.object({
   email: z.string().email(),

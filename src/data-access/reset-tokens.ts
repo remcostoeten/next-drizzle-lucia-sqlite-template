@@ -1,9 +1,9 @@
+import { TOKEN_LENGTH, TOKEN_TTL } from "@/core/constants/token-length";
+import { db } from "@/core/server/db";
+import { resetTokens } from "@/core/server/db/schema";
 import { generateRandomToken } from "@/data-access/utils";
-import { resetTokens } from "@/db/schema";
 import { UserId } from "@/use-cases/types";
 import { eq } from "drizzle-orm";
-import { db } from "@/db";
-import { TOKEN_LENGTH, TOKEN_TTL } from "@/core/constants/token-length";
 
 export async function createPasswordResetToken(userId: UserId) {
   const token = await generateRandomToken(TOKEN_LENGTH);

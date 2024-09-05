@@ -1,7 +1,5 @@
 "use client";
 
-import { z } from "zod";
-
 import { LoaderButton } from "@/components/loader-button";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
@@ -14,14 +12,15 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { changePasswordAction } from "@/core/server/actions";
 import { cn } from "@/lib/utils";
 import { pageTitleStyles } from "@/style/common";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Terminal } from "lucide-react";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
+import { z } from "zod";
 import { useServerAction } from "zsa-react";
-import { changePasswordAction } from "./actions";
 
 const registrationSchema = z
   .object({

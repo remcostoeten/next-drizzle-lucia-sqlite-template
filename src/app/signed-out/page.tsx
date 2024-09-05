@@ -20,7 +20,7 @@ export default function SignedOutPage() {
         account.
       </p>
 
-      <Button asChild>
+      <Button variant='outline' className="w-full"  asChild>
         <Link href="/sign-in">Sign In</Link>
       </Button>
     </div>

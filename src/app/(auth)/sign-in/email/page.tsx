@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
+import { signInAction } from "@/core/server/actions";
 import { cn } from "@/lib/utils";
 import { pageTitleStyles } from "@/style/common";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -22,7 +23,6 @@ import { Terminal } from "lucide-react";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { useServerAction } from "zsa-react";
-import { signInAction } from "./actions";
 
 const registrationSchema = z.object({
   email: z.string().email(),
@@ -117,12 +117,6 @@ export default function SignInPage() {
           </LoaderButton>
         </form>
       </Form>
-
-      <div className="flex justify-center">
-        <Button asChild variant="link">
-          <Link href="/sign-in/forgot-password">Forgot Password</Link>
-        </Button>
-      </div>
 
       <div className="relative py-4">
         <div className="absolute inset-0 flex items-center">

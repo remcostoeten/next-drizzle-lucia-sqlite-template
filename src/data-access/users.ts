@@ -1,10 +1,10 @@
-import { db } from "@/db";
-import { User, accounts, users } from "@/db/schema";
-import { eq } from "drizzle-orm";
-import crypto from "crypto";
-import { UserId } from "@/use-cases/types";
-import { getAccountByUserId } from "@/data-access/accounts";
 import { ITERATIONS } from "@/core/constants/token-length";
+import { db } from "@/core/server/db";
+import { User, users } from "@/core/server/db/schema";
+import { getAccountByUserId } from "@/data-access/accounts";
+import { UserId } from "@/use-cases/types";
+import crypto from "crypto";
+import { eq } from "drizzle-orm";
 
 export async function deleteUser(userId: UserId) {
   await db.delete(users).where(eq(users.id, userId));
