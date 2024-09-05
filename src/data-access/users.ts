@@ -6,7 +6,7 @@ import { UserId } from "@/use-cases/types";
 import crypto from "crypto";
 import { eq, or } from "drizzle-orm";
 
-export async function deleteUser(userId: UserId) {
+export async function deleteUser(userId: number) {
   await db.delete(users).where(eq(users.id, userId));
 }
 

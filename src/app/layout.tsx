@@ -1,9 +1,9 @@
 import { cn } from "@/lib/utils";
 import type { Metadata } from "next";
+import localFont from "next/font/local";
 import NextTopLoader from "nextjs-toploader";
 import { ReactNode } from "react";
 import "../styles/app.scss";
-import localFont from "next/font/local";
 
 import { Toaster } from "@/components/ui/toaster";
 import { Header } from "./_header/header";

@@ -28,7 +28,6 @@ export async function createProfile(
     .returning();
   return profile;
 }
-
 export async function updateProfile(userId: number, data: ProfileUpdateData) {
   await db.update(profiles)
     .set(data)
@@ -41,4 +40,8 @@ export async function getProfile(userId: UserId) {
   });
 
   return profile;
+}
+
+export async function deleteProfile(userId: number) {
+  await db.delete(profiles).where(eq(profiles.userId, userId));
 }
