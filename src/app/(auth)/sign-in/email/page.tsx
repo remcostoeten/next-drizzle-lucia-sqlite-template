@@ -2,10 +2,9 @@
 
 import { z } from "zod";
 
+import { LoaderButton } from "@/components/loader-button";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
 import {
   Form,
   FormControl,
@@ -14,15 +13,16 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { pageTitleStyles } from "@/styles/common";
-import { cn } from "@/lib/utils";
-import { useServerAction } from "zsa-react";
-import Link from "next/link";
+import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
-import { signInAction } from "./actions";
-import { LoaderButton } from "@/components/loader-button";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { cn } from "@/lib/utils";
+import { pageTitleStyles } from "@/style/common";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { Terminal } from "lucide-react";
+import Link from "next/link";
+import { useForm } from "react-hook-form";
+import { useServerAction } from "zsa-react";
+import { signInAction } from "./actions";
 
 const registrationSchema = z.object({
   email: z.string().email(),

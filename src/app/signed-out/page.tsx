@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { pageTitleStyles } from "@/styles/common";
+import { pageTitleStyles } from "@/style/common";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";

@@ -1,6 +1,6 @@
 "use client";
 
-import { pageTitleStyles } from "@/styles/common";
+import { pageTitleStyles } from "@/style/common";
 
 export default function ErrorPage({
   error,

@@ -1,17 +1,16 @@
-import "@/app/globals.css";
+import { cn } from "@/lib/utils";
 import type { Metadata } from "next";
 import NextTopLoader from "nextjs-toploader";
-import { cn } from "@/lib/utils";
 import { ReactNode } from "react";
+import "../styles/app.scss";
 
-import { Archivo } from "next/font/google";
-import { Libre_Franklin } from "next/font/google";
-import { Providers } from "./providers";
 import { Toaster } from "@/components/ui/toaster";
+import { Archivo, Libre_Franklin } from "next/font/google";
 import { Header } from "./_header/header";
+import { Providers } from "./providers";
 
 const archivo = Archivo({
-  subsets: ["latin"],
+  subsets: ["latin"], 
   display: "swap",
   variable: "--font-archivo",
 });

@@ -18,10 +18,25 @@
       }
     ],
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "config": ["./src/core/config/*"], 
+      "components": ["./src/components/*"], 
+      "ui": ["./src/components/ui/*"], 
+      "core": ["./src/core/*"], 
+      "server": ["./src/core/server/*"],
+      "schema": ["./src/core/server/schema/index.ts"],
+      "actions": ["./src/core/server/actions/*"],
+      "db": ["./src/core/server/db/index.ts"] 
     },
     "target": "ES2017"
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
-  "exclude": ["node_modules"]
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }

@@ -1,12 +1,11 @@
 "use client";
 
-import * as React from "react";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { btnStyles } from "@/styles/icons";
+import { btnStyles } from "@/style/icons";
 import { Mail } from "lucide-react";
 import Link from "next/link";
-import { MagicLinkForm } from "./magic-link-form";
+import * as React from "react";
 
 export default function SignInPage() {
   return (

@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { pageTitleStyles } from "@/styles/common";
+import { pageTitleStyles } from "@/style/common";
 import Link from "next/link";
 
 export default function VerifySuccess() {

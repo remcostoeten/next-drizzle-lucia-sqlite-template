@@ -1,0 +1,7 @@
+@use "variables" as vars;
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import "./utils/_utillity-classes";
