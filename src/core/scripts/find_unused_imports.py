@@ -5,7 +5,7 @@ from typing import List, Dict, Set
 # Configuration variables
 ROOT_DIR = 'src'
 FILE_EXTENSIONS = ('.ts', '.tsx')
-OUTPUT_LOG_FILE = 'unused_imports.log'
+OUTPUT_LOG_FILE = 'DEV-NOTRACK/unused_imports.log'
 
 def find_typescript_files(root_dir: str) -> List[str]:
     typescript_files = []

@@ -1,10 +1,11 @@
+
 import os
 import re
 from typing import List, Set
 
 ROOT_DIR = 'src'
 FILE_EXTENSIONS = ('.ts', '.tsx')
-OUTPUT_LOG_FILE = 'unused_files.log'
+OUTPUT_LOG_FILE = 'DEV-NOTRACK/unused_files.log'
 
 def find_typescript_files(root_dir: str) -> List[str]:
     typescript_files = []
