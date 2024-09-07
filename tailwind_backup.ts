@@ -1,4 +1,5 @@
-import svgToDataUri from 'mini-svg-data-uri';
+
+ import svgToDataUri from 'mini-svg-data-uri';
 import type { Config } from 'tailwindcss';
 import flattenColorPalette from 'tailwindcss/lib/util/flattenColorPalette';
 
@@ -21,36 +22,12 @@ const config: Config = {
     },
     extend: {
       colors: {
-        // Theme colors
-        primary: 'var(--brand)',
-        brand: 'var(--brand)',
-        'primary--darker': 'var(--brand-darker)',
-        'primary--lighter': 'var(--brand-lighter)',
-
-        // Misc
-        white: 'var(--off-white)',
-        black: 'var(--black)',
-
-        // Background colors
-        body: 'var(--black)',
-        section: 'var(--black--alt)',
-        card: 'var(--black--alt)',
-        'input-bg': 'var(--black--lighter)',
-        'card-hover': 'var(--black--lighter)',
-        'dropdown-bg': 'var(--black--lighter)',
-        'section--lighter': 'var(--black--lighter)',
-        button: '#262626',
-
-        // Text colors
-        'button-alt-text': 'var(--black--lighter)',
-        placeholder: 'var(--grey-light)',
-
-        // old part here
+        // Custom colors
         'body': 'var(--bg-body)',
         'bg-dropdown': 'var(--bg-dropdown)',
-        modal: '#fff',
+        'modal': '#fff',
         'bg-modal-hover': 'var(--bg-modal-hover)',
-        border: 'var(--border)',
+        'border': 'var(--border)',
         'border-default': 'var(--border-default)',
         'border-outline': 'var(--border-outline)',
         'border-separator': 'var(--border-separator)',
@@ -63,51 +40,46 @@ const config: Config = {
         'text-dropdown-item': 'var(--text-dropdown-item)',
         'button-default': 'var(--button-default)',
         'button-hover': 'var(--button-hover)',
-        success: 'var(--green)',
-        error: 'var(--red)',
+        success: 'var(--color-success)',
+        error: 'var(--color-error)',
         'menu-icon': 'var(--color-menu-icon)',
-        'input-focus': 'var(--grey-alt)',
+        placeholder: 'var(--color-placeholder)',
+        'input-focus': 'var(--color-input-focus)',
         'badge-default': 'var(--badge-default)',
-        'badge-hover': 'var(--grey)',
-        input: 'var(--bg-input)',
+        'badge-hover': 'var(--badge-hover)',
+
+        input: 'var(--bg-input) ',
         ring: 'hsl(var(--ring))',
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
+        primary: {
+          DEFAULT: 'hsl(var(--primary))',
+          foreground: 'hsl(var(--primary-foreground))',
+        },
+        secondary: {
+          DEFAULT: 'hsl(var(--secondary))',
+          foreground: 'hsl(var(--secondary-foreground))',
+        },
         destructive: {
-          DEFAULT: 'var(--red)',
+          DEFAULT: 'hsl(var(--destructive))',
           foreground: 'hsl(var(--destructive-foreground))',
         },
+        muted: {
+          DEFAULT: 'hsl(var(--muted))',
+          foreground: 'hsl(var(--muted-foreground))',
+        },
         accent: {
-          DEFAULT: 'var(--black-quaternary)',
+          DEFAULT: 'hsl(var(--accent))',
           foreground: 'hsl(var(--accent-foreground))',
         },
         popover: {
-          DEFAULT: 'var(--black-quaternary)',
+          DEFAULT: 'var(--bg-modal)',
           foreground: 'hsl(var(--popover-foreground))',
         },
         card: {
-          DEFAULT: 'var(--black-alt)',
+          DEFAULT: 'hsl(var(--card))',
           foreground: 'hsl(var(--card-foreground))',
         },
-      },
-      backgroundColor: {
-        button: 'var(--black--tertiary)',
-        modal: 'var(--black--quaternary)',
-        'modal-item-hover': 'var(--black--quinary)',
-        'badge-hover': 'var(--grey)',
-        'button-hover': 'var(--grey-secondary)',
-      },
-      textColor: {
-        tile: 'var(--off-white)',
-        'button-text': 'var(--white-secondary)',
-        'dropdown-item': 'var(--off-white-alt)',
-        muted: 'var(--grey-light)',
-        'sub-title': 'var(--grey-tertiary)',
-        'regular-nav': 'var(--grey-tertiary)',
-        'menu-items': 'var(--grey-quaternary)',
-      },
-      borderColor: {
-        border: '#262626',
       },
       borderRadius: {
         lg: 'var(--radius)',
@@ -180,13 +152,7 @@ const config: Config = {
   ],
 };
 
-function addVariablesForColors({
-  addBase,
-  theme,
-}: {
-  addBase: Function;
-  theme: any;
-}) {
+function addVariablesForColors({ addBase, theme, matchUtilities }: { addBase: Function, theme: any, matchUtilities: any }) {
   const allColors = flattenColorPalette(theme('colors'));
   const newVars = Object.fromEntries(
     Object.entries(allColors).map(([key, val]) => [`--${key}`, val])

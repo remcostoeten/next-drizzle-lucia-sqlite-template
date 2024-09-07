@@ -1,7 +1,62 @@
-@use "variables" as vars;
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-@import "./utils/_utillity-classes";
+ @layer base {
+  :root { 
+
+@layer base {
+    :root {
+      // Theme color-scheme:      
+      --brand: #fe5b01;
+      --primary: var(--brand);
+
+      // Brand variants
+      --brand--lighter: #fe6b1a;
+      --brand--darker: #e55201;
+
+      // Colors (which are re-used a lot so later we specifically re-define them with their purpose name)
+
+      // Black
+      --black: #0b0a0b; // body 
+      --black--lighter: #171616; // input bg, card-hover, dropdown-bg, section--lighter, button-alt-text
+      --black--alt: #111110; // section and card 
+      --black-secondary: #1b1b1a; // border
+      --black-tertiary: #1e1e1f; // button-bg
+      --black-quaternary: #161616; // modal bg 
+      --black-quinary: #1a1b1a; // modal-item-hover
+
+      // White
+      --off-white: #fefeff; // title, input-text
+      --white-secondary: #e5e5e5; // button-text
+      --off-white-alt: #d5d4d5; // dropdown-item, input focus
+
+      // Greys
+      --grey: #404141; // border, badge hover
+      --grey-alt: #535253; // border, hover/focus input
+      --grey-secondary: #272627; // badge, button-hover, dropdown-item-hover, separator, outline-alt
+      --grey-light: #727373; // text-muted, input, textarea placeholder
+      --grey-tertiary: #a2a3a2; // sub-title, regular-nav-text
+      --grey-quaternary: #545454; // menu-items
+
+      // Action colors
+      --red: #e26969; // error
+      --green: #23c45e; // success
+      --yellow: #e2c044; // warning
+
+      //  specific
+      --button-bg: "#262626"
+      
+    }
+  }
+
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+

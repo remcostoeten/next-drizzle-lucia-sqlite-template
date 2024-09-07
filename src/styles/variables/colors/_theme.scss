@@ -1,31 +1,42 @@
-$theme-colors: (
-  "brand": #ff6c00,
-  "primary--alt": #ff6c00,
-  "primary--darker": rgb(255, 91, 0),
-  "error": #ff4949,
-  "success": #2cffd1,
+ @layer base {
+   :root {
+     // Theme color-scheme: 
+     --brand: #fe5b01;
+     --primary: var(--brand);
 
-  // dark theme colors
-  "dark-bg": #040404,
-  "dark-bg--lighter": #161616,
-  // footer
-  "dark-section": #0c0c0c,
-  // cards, alt-sections
-  "dark-section--lighter": #131313,
+     // Brand variants
+     --brand--lighter: #fe6b1a;
+     --brand--darker: #e55201;
 
-  // bg-card-alt, bg-section-alt
-  // bg for card forw example
-  "body-gradient": linear-gradient(256.59deg, #000 23.98%, #171616 100.35%),
-  // Border color
-  "seperator": #131313,
-  "border": #252525,
-  // text-colors
-  "muted": #909090,
-  "white": #f3f3f3,
-);
+     // Colors (which are re-used a lot so later we specifically re-define them with their purpose name)
 
-@mixin apply-theme-colors {
-  @each $key, $value in $theme-colors {
-    --#{$key}: #{$value};
-  }
-}
+     // Black
+     --black: #0b0a0b; // body 
+     --black--lighter: #171616; // input bg, card-hover, dropdown-bg, section--lighter, button-alt-text
+     --black--alt: #111110; // section and card 
+     --black-secondary: #1b1b1a; // border
+     --black-tertiary: #1e1e1f; // button-bg
+     --black-quaternary: #161616; // modal bg 
+     --black-quinary: #1a1b1a; // modal-item-hover
+
+     // White
+     --off-white: #fefeff; // title, input-text
+     --white-secondary: #e5e5e5; // button-text
+     --off-white-alt: #d5d4d5; // dropdown-item, input focus
+
+     // Greys
+     --grey: #404141; // border, badge hover
+     --grey-alt: #535253; // border, hover/focus input
+     --grey-secondary: #272627; // badge, button-hover, dropdown-item-hover, separator, outline-alt
+     --grey-light: #727373; // text-muted, input, textarea placeholder
+     --grey-tertiary: #a2a3a2; // sub-title, regular-nav-text
+     --grey-muted: #727273; // muted
+     --grey-quaternary: #545454; // menu-items
+
+     // Action colors
+     --red: #e26969; // error
+     --green: #23c45e; // success
+     --yellow: #e2c044; // warning
+   }
+ }
+ 

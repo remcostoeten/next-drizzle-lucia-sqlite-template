@@ -1,27 +1,46 @@
 $dark-theme: (
-  "brand": #ff6c00,
-  "primary--alt": #ff6c00,
-  "primary--darker": rgb(255, 91, 0),
-  "error": #ff4949,
-  "success": #2cffd1,
+  'body': #0b0b0b,
+  'section': #171717,
+  'input': #171717,
+  'menu-active': #0b0b0b,
 
-  // dark theme colors
-  "dark-bg": #040404,
-  "dark-bg--lighter": #161616,
+  // button bg's
+  'btn-on-section': #222222,
+  'kbd-button': #0b0b0b,
+
+  // text
+  'white': #fff,
+  'off-white': #e5e5e5,
+
+  // icon colors
+  'grey-icon': #a3a3a3, // icon on section
+
+  // Miscellaneous
+  'grey-ring': #0b0b0b,
+
+  'brand': #ff6c00,
+  'primary--alt': #ff6c00,
+  'primary--darker': rgb(255, 91, 0),
+  'error': #ff4949,
+  'success': #2cffd1,
+
   // footer
-  "dark-section": #0c0c0c,
+  'dark-section': #0c0c0c,
+
   // cards, alt-sections
-  "dark-section--lighter": #131313,
+  'dark-section--lighter': #131313,
 
   // bg-card-alt, bg-section-alt
   // bg for card for example
-  "body-gradient": linear-gradient(256.59deg, #000 23.98%, #171616 100.35%),
+  'body-gradient': linear-gradient(256.59deg, #000 23.98%, #171616 100.35%),
+
   // Border color
-  "seperator": #131313,
-  "border": #252525,
+  'separator': #131313,
+  'dark-border': #252525,
+
   // text-colors
-  "muted": #909090,
-  "white": #f3f3f3,
+  'muted': #909090,
+  'white': #f3f3f3,                  a 
 );
 
 @mixin apply-dark-theme {
