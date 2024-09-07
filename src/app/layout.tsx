@@ -6,8 +6,7 @@ import { ReactNode } from "react";
 import "../styles/app.scss";
 
 import { Toaster } from "@/components/ui/toaster";
-import { Header } from "./_header/header";
-import { Providers } from "./providers";
+import Providers from "../components/theme/providers";
 
 const geistSans = localFont({
   src: "./GeistVF.woff",
@@ -37,14 +36,13 @@ export default async function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body
         className={cn(
-          "min-h-screen bg-dark antialiased",
+          "min-h-screen bg-bg-body antialiased",
           geistSans.variable + " " + geistMono.variable,
         )}
       >
         <Providers>
-          <NextTopLoader showSpinner={false}  />
-          <Header />
-          <div className="container mx-auto w-full py-12">{children}</div>
+          <NextTopLoader showSpinner={false} />
+          {children}
         </Providers>
         <Toaster />
       </body>

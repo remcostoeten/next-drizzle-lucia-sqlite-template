@@ -1,8 +1,8 @@
-w'use server'
+'use server'
 
-import { redirect } from 'next/navigation'
+import { lucia, validateRequest } from '@/lib/auth'
 import { cookies } from 'next/headers'
-import { validateRequest, lucia } from '@/lib/auth'
+import { redirect } from 'next/navigation'
 
 export async function signOutAction() {
   const { session } = await validateRequest()

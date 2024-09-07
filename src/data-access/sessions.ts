@@ -1,5 +1,5 @@
 import { db } from "@/core/server/db";
-import { sessions } from "@/core/server/db/schema";
+import { sessions } from "@/core/server/schema/schema";
 import { UserId } from "@/use-cases/types";
 import { eq } from "drizzle-orm";
 

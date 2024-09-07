@@ -1,5 +1,3 @@
-"use client";
-
 import { GithubIcon, GoogleIcon, MailIcon } from "@/components/theme/icons";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -50,7 +48,7 @@ export default function SignInPage() {
 
           <div className="flex justify-center">
             <Button variant="outline" className="w-full">
-              <Link href="/sign-in/email" className="flex items-center gap-4">
+              <Link href="/sign-in/email" className="flex items-center gap-4 w-full">
                 <MailIcon /> <span>Sign in with Email</span>
               </Link>
             </Button>

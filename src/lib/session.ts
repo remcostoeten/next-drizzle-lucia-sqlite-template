@@ -1,37 +1,42 @@
-import "server-only";
+import { Session, User } from "lucia";
 import { cookies } from "next/headers";
-import { lucia } from "@/lib/auth";
-import { validateRequest } from "@/lib/auth";
-import { cache } from "react";
-import { AuthenticationError } from "../use-cases/errors";
-import { UserId } from "@/use-cases/types";
+import { lucia } from "./auth";
 
-export const getCurrentUser = cache(async () => {
-  const session = await validateRequest();
-  if (!session.user) {
-    return undefined;
+export const validateRequest = async (): Promise<
+  { user: User; session: Session } | { user: null; session: null }
+> => {
+  const sessionId = cookies().get(lucia.sessionCookieName)?.value ?? null;
+  if (!sessionId) {
+    return {
+      user: null,
+      session: null,
+    };
   }
-  return session.user;
-});
 
-export const assertAuthenticated = async () => {
-  const user = await getCurrentUser();
-  if (!user) {
-    throw new AuthenticationError();
-  }
-  return user;
+  const result = await lucia.validateSession(sessionId);
+
+  try {
+    if (result.session && result.session.fresh) {
+      const sessionCookie = lucia.createSessionCookie(result.session.id);
+      cookies().set(
+        sessionCookie.name,
+        sessionCookie.value,
+        sessionCookie.attributes,
+      );
+    }
+    if (!result.session) {
+      const sessionCookie = lucia.createBlankSessionCookie();
+      cookies().set(
+        sessionCookie.name,
+        sessionCookie.value,
+        sessionCookie.attributes,
+      );
+    }
+  } catch {}
+  return result;
 };
 
-export async function setSession(userId: UserId, rememberMe: boolean = false) {
-  const expiresIn = rememberMe ? 30 * 24 * 60 * 60 : 24 * 60 * 60; // 30 days or 1 day in seconds
-  const session = await lucia.createSession(userId, {});
-  const sessionCookie = lucia.createSessionCookie(session.id);
-  cookies().set(
-    sessionCookie.name,
-    sessionCookie.value,
-    {
-      ...sessionCookie.attributes,
-      maxAge: expiresIn
-    }
-  );
+export async function getCurrentUser(): Promise<User | null> {
+  const { user } = await validateRequest();
+  return user;
 }

@@ -23,16 +23,15 @@ import {
   verifyPassword
 } from "@/data-access/users";
 import { createTransaction } from "@/data-access/utils";
-import { sendEmail } from "@/lib/email";
 import { generateRandomName } from "@/lib/names";
-import { UserId, UserSession } from "@/use-cases/types";
 import {
   AuthenticationError,
   EmailInUseError,
-  UsernameInUseError,
   LoginError,
   NotFoundError,
+  UsernameInUseError,
 } from "./errors";
+import { UserId, UserSession } from "./user";
 
 export async function deleteUserUseCase(
   authenticatedUser: UserSession,

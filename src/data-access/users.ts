@@ -1,10 +1,10 @@
-import { ITERATIONS } from "@/core/constants/token-length";
+           import { ITERATIONS } from "@/core/constants/token-length";
 import { db } from "@/core/server/db";
-import { User, users } from "@/core/server/db/schema";
+import { users } from "@/core/server/schema";
 import { getAccountByUserId } from "@/data-access/accounts";
-import { UserId } from "@/use-cases/types";
 import crypto from "crypto";
 import { eq, or } from "drizzle-orm";
+import { UserId } from "lucia";
 
 export async function deleteUser(userId: number) {
   await db.delete(users).where(eq(users.id, userId));

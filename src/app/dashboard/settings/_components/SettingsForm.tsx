@@ -1,18 +1,15 @@
 'use client'
 
-import { useState } from 'react'
-import { useRouter } from 'next/navigation'
-import { useForm } from 'react-hook-form'
+import { Button, Form, FormControl, FormField, FormItem, FormLabel, FormMessage, Input, Textarea } from "@/components/ui"
+import { useToast } from '@/components/ui/use-toast'
+import { deleteAccountAction, updateProfileAction } from '@/core/server/actions/auth/create-profile-action'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { z } from 'zod'
 import { motion } from 'framer-motion'
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
-import { Textarea } from "@/components/ui/textarea"
-import { useToast } from "@/components/ui/use-toast"
-import { AvatarUpload } from '@/app/(landing)/onboarding/_components/AvatarUpload'
-import { updateProfileAction, deleteAccountAction } from '@/core/server/actions'
+import { useRouter } from 'next/navigation'
+import { useState } from 'react'
+import { useForm } from 'react-hook-form'
+import { z } from 'zod'
+import { AvatarUpload } from "../../../../../onboarding/_components/AvatarUpload"
 
 const profileSchema = z.object({
   username: z.string().min(3, 'Username must be at least 3 characters'),
@@ -21,7 +18,7 @@ const profileSchema = z.object({
   avatar: z.string().optional(),
 })
 
-interface SettingsFormProps {
+type SettingsFormProps = {
   initialData: {
     username: string
     displayName: string
@@ -31,7 +28,7 @@ interface SettingsFormProps {
   userId: number
 }
 
-export function SettingsForm({ initialData, userId }: SettingsFormProps) {
+export default function SettingsForm({ initialData, userId }: SettingsFormProps) {
   const router = useRouter()
   const { toast } = useToast()
   const [isDeleting, setIsDeleting] = useState(false)
@@ -45,23 +42,6 @@ export function SettingsForm({ initialData, userId }: SettingsFormProps) {
       avatar: initialData.image || '',
     },
   })
-
-  async function onSubmit(formData: FormData) {
-    const result = await updateProfileAction(userId, formData)
-    if (result.success) {
-      toast({
-        title: "Profile updated",
-        description: "Your profile has been updated successfully.",
-      })
-      router.refresh()
-    } else {
-      toast({
-        title: "Error",
-        description: result.error,
-        variant: "destructive",
-      })
-    }
-  }
 
   async function handleDeleteAccount() {
     setIsDeleting(true)
@@ -89,7 +69,7 @@ export function SettingsForm({ initialData, userId }: SettingsFormProps) {
 
   return (
     <Form {...form}>
-      <form action={onSubmit} className="space-y-8">
+      <form action={updateProfileAction.bind(null, userId)} className="space-y-8">
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -99,7 +79,7 @@ export function SettingsForm({ initialData, userId }: SettingsFormProps) {
             control={form.control}
             name="avatar"
             render={({ field }) => (
-              <FormItem>
+              <FormItem> 
                 <FormLabel className="text-gray-300">Profile Picture</FormLabel>
                 <FormControl>
                   <AvatarUpload

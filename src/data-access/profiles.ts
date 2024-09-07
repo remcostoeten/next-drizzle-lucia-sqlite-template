@@ -1,7 +1,7 @@
 import { db } from "@/core/server/db";
-import { Profile, profiles } from "@/core/server/db/schema";
-import { UserId } from "@/use-cases/types";
-import { eq } from "drizzle-orm";
+import { profiles } from "@/core/server/schema";
+import { eq } from "drizzle-orm/sql";
+import { UserId } from "lucia";
 
 type ProfileUpdateData = {
   username?: string;
