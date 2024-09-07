@@ -41,11 +41,11 @@ export default function DashboardWrapper({ children }: DashboardWrapperProps) {
     <div className="flex flex-1 overflow-hidden">
       <ClientSidebar items={sidebarItemsWithComponents} isOpen={isSidebarOpen} />
       <div className="flex flex-col flex-1 overflow-hidden">
-        <div className="flex items-center p-4 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
+        <div className="flex items-center p-4 bg-bodyy border-b border-gray-200 dark:border-border">
           <SidebarToggle onToggle={setIsSidebarOpen} />
           <h1 className="text-xl font-semibold text-gray-800 dark:text-white">Dashboard</h1>
         </div>
-        <main className="flex-1 overflow-auto p-6 bg-gray-100 dark:bg-gray-900">
+        <main className="flex-1 overflow-auto p-6  bg-body">
           {children}
         </main>
       </div>

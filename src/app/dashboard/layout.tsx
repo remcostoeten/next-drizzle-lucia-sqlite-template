@@ -19,15 +19,15 @@ export default async function DashboardLayout({
   // Ensure the user object matches the User interface
   const user: User | undefined = currentUser
     ? {
-        id: currentUser.id.toString(), // Convert to string if it's a number
-        name: currentUser.name || '',
-        email: currentUser.email || '',
-        image: currentUser.image,
-      }
+      id: currentUser.id.toString(), // Convert to string if it's a number
+      name: currentUser.name || '',
+      email: currentUser.email || '',
+      image: currentUser.image,
+    }
     : undefined
 
   return (
-    <div className="flex flex-col h-screen bg-gray-100 dark:bg-gray-900">
+    <div className="flex flex-col h-screen bg-gray-100 dark:bg-body-bg">
       <Header user={user} />
       <DashboardWrapper>
         {children}

@@ -11,7 +11,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
+import Input from "@/components/ui/input";
 import { changePasswordAction } from "@/core/server/actions";
 import { cn } from "@/lib/utils";
 import { pageTitleStyles } from "@/style/common";

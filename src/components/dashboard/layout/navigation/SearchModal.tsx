@@ -1,84 +1,152 @@
-'use client'
 
-import { Dialog, DialogContent, DialogHeader, Input } from "@/components/ui"
-import { useKeyboardShortcut } from "@/core/hooks/useKeyboardShortcut"
-import { FileText, HelpCircle, LayoutDashboard, MessageSquare, Search, Table } from 'lucide-react'
-import { useCallback, useEffect, useRef, useState } from 'react'
 
-const searchOptions = [
-  { icon: MessageSquare, label: 'Start a conversation', shortcut: 'C' },
-  { icon: FileText, label: 'Write a query', shortcut: 'Q' },
-  { icon: LayoutDashboard, label: 'Create a dashboard', shortcut: 'D' },
-  { icon: Table, label: 'Create a table', shortcut: 'T' },
-  { icon: HelpCircle, label: 'Contact support', shortcut: 'S' },
-]
+import { Dialog, DialogContent, DialogHeader, DialogOverlay } from "@/components/ui/dialog";
+import { useKeyboardShortcut } from "@/core/hooks/useKeyboardShortcut";
+import { Search } from 'lucide-react';
+import { useEffect, useRef, useState } from 'react';
 
-export function SearchModal() {
-  const [isOpen, setIsOpen] = useState(false)
-  const [searchTerm, setSearchTerm] = useState('')
-  const [backdropVariant, setBackdropVariant] = useState<'light' | 'heavy'>('light')
-  const inputRef = useRef<HTMLInputElement>(null)
+type ModifierKeyAlias = 'Command' | 'Option' | 'Shift' | 'Control';
+type BlurVariant = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'none';
 
-  const openModal = useCallback(() => {
-    setIsOpen(true)
-    setSearchTerm('')
-  }, [])
+type KbdProps = {
+  modifier?: ModifierKeyAlias;
+  key: string;
+  fullShortcut?: string;
+}
 
-  const closeModal = useCallback(() => {
-    setIsOpen(false)
-    setSearchTerm('')
-  }, [])
+type InputProps = {
+  isSearch?: boolean;
+  searchWidth?: string;
+  width?: string;
+  kbdProps?: KbdProps;
+  backdropBlur?: BlurVariant;
+  backdropColor?: string;
+  backdropOpacity?: number;
+  placeholder?: string;
+  className?: string;
+  searchOptions?: Array<{ icon: React.ComponentType; label: string }>;
+  hasBlur?: boolean;
+  [key: string]: any;
+}
+
+const modifierKeySymbols: Record<ModifierKeyAlias, string> = {
+  Command: '⌘',
+  Option: '⌥',
+  Shift: '⇧',
+  Control: '⌃',
+};
+
+function renderKbdIcon({ modifier, key, fullShortcut }: KbdProps) {
+  const shortcut = fullShortcut || (modifier ? `${modifierKeySymbols[modifier]} ${key}` : key);
+
+  return (
+    <kbd className="absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none inline-flex items-center border border-neutral-700 rounded px-1.5 font-mono text-[10px] font-medium text-neutral-400">
+      {shortcut}
+    </kbd>
+  );
+}
+
+const blurValues: Record<BlurVariant, string> = {
+  xs: 'backdrop-blur-[1px]',
+  sm: 'backdrop-blur-sm',
+  md: 'backdrop-blur-md',
+  lg: 'backdrop-blur-lg',
+  xl: 'backdrop-blur-xl',
+  none: 'backdrop-blur-none'
+};
+
+export default function Input({
+  isSearch = false,
+  searchWidth = 'w-72',
+  width = 'w-full',
+  kbdProps = { modifier: 'Command', key: 'K' },
+  backdropBlur = 'none',
+  backdropColor = 'black',
+  backdropOpacity = 0.3,
+  placeholder = "Enter text...",
+  className = "",
+  searchOptions = [],
+  hasBlur = true,
+  ...props
+}: InputProps) {
+  const [isOpen, setIsOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  const openModal = () => {
+    if (isSearch) {
+      setIsOpen(true);
+      setSearchTerm('');
+    }
+  };
+
+  const closeModal = () => {
+    setIsOpen(false);
+    setSearchTerm('');
+  };
 
   useKeyboardShortcut([
     { key: 'k', ctrlKey: true },
     { key: 'k', metaKey: true },
     { key: 's' }
-  ], openModal)
+  ], openModal);
 
-  useKeyboardShortcut({ key: 'Escape' }, closeModal)
+  useKeyboardShortcut({ key: 'Escape' }, closeModal);
 
   useEffect(() => {
     if (isOpen && inputRef.current) {
-      inputRef.current.focus()
+      inputRef.current.focus();
     }
-  }, [isOpen])
+  }, [isOpen]);
 
-  const toggleBackdropVariant = () => {
-    setBackdropVariant(prev => prev === 'light' ? 'heavy' : 'light')
-  }
+  const baseInputClasses = "py-2 px-4 border border-border ";
 
   const backdropStyle = {
-    '--tw-backdrop-blur': backdropVariant === 'heavy' ? '16px' : '8px',
-    '--tw-backdrop-brightness': backdropVariant === 'heavy' ? '0.7' : '1',
-  } as React.CSSProperties
+    backgroundColor: backdropColor,
+    opacity: backdropOpacity,
+  };
+
+  if (!isSearch) {
+    return (
+      <input
+        type="text"
+        className={`${baseInputClasses} ${width} ${className}`}
+        placeholder={placeholder}
+        {...props}
+      />
+    );
+  }
 
   return (
     <>
-      <div className="relative" onClick={openModal}>
+      <div className={`relative ${searchWidth}`} onClick={openModal}>
         <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-neutral-500" size={18} />
-        <Input
+        <input
           type="search"
-          placeholder="Search"
-          className="w-full py-2 pl-10 pr-12 bg-neutral-800 border border-neutral-700 rounded-md text-sm text-neutral-300 placeholder-neutral-500 focus:outline-none focus:ring-2 focus:ring-neutral-600 cursor-pointer"
+          placeholder={placeholder}
+          className={`${baseInputClasses} w-full pr-12 relative cursor-pointer ${className}`}
           readOnly
+          {...props}
         />
-        <kbd className="absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none inline-flex items-center border border-neutral-700 rounded px-1.5 font-mono text-[10px] font-medium text-neutral-400">
-          ⌘K
-        </kbd>
+        {renderKbdIcon(kbdProps)}
       </div>
 
-      <Dialog open={isOpen} onOpenChange={setIsOpen}>
-        <DialogContent className="sm:max-w-[425px] bg-neutral-900 text-white" style={backdropStyle}>
+      <Dialog open={isOpen} onOpenChange={closeModal}>
+        <DialogOverlay
+          className={hasBlur ? blurValues[backdropBlur] : ''}
+          style={backdropStyle}
+        />
+        <DialogContent className="sm:max-w-[425px] bg-neutral-900 text-white relative z-50">
           <DialogHeader>
             <div className="relative">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-neutral-500" size={18} />
-              <Input
+              <input
                 ref={inputRef}
                 type="search"
                 placeholder="Search your base..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full py-2 pl-10 pr-4 bg-neutral-800 border border-neutral-700 rounded-md text-sm text-neutral-300 placeholder-neutral-500 focus:outline-none focus:ring-2 focus:ring-neutral-600 input-focus"
+                className={`${baseInputClasses} w-full pl-10 pr-4 text-neutral-300`}
               />
             </div>
           </DialogHeader>
@@ -89,23 +157,11 @@ export function SearchModal() {
                   <option.icon className="mr-3 text-neutral-400" size={18} />
                   <span className="text-sm text-neutral-300">{option.label}</span>
                 </div>
-                <div className="flex items-center space-x-2">
-                  <div className="text-xs text-neutral-500">⌘</div>
-                  <kbd className="bg-neutral-800 text-neutral-400 px-1.5 py-0.5 rounded text-xs">{option.shortcut}</kbd>
-                </div>
               </div>
             ))}
-          </div>
-          <div className="mt-4">
-            <button
-              onClick={toggleBackdropVariant}
-              className="text-sm text-neutral-400 hover:text-neutral-300 transition-colors"
-            >
-              Toggle Backdrop: {backdropVariant === 'light' ? 'Light' : 'Heavy'}
-            </button>
           </div>
         </DialogContent>
       </Dialog>
     </>
-  )
+  );
 }

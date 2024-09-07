@@ -13,7 +13,8 @@ $dark-theme: (
   'off-white': #e5e5e5,
 
   // icon colors
-  'grey-icon': #a3a3a3, // icon on section
+  'grey-icon': #a3a3a3,
+  // icon on section
 
   // Miscellaneous
   'grey-ring': #0b0b0b,
@@ -32,7 +33,7 @@ $dark-theme: (
 
   // bg-card-alt, bg-section-alt
   // bg for card for example
-  'body-gradient': linear-gradient(256.59deg, #000 23.98%, #171616 100.35%),
+  'body-gradient': linear-gradient(256.59deg, #000 23.98%, #17171 100.35%),
 
   // Border color
   'separator': #131313,
@@ -40,7 +41,8 @@ $dark-theme: (
 
   // text-colors
   'muted': #909090,
-  'white': #f3f3f3,                  a 
+  'white': #f3f3f3,
+  a
 );
 
 @mixin apply-dark-theme {

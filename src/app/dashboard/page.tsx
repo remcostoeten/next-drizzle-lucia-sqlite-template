@@ -1,12 +1,14 @@
-// app/tables/page.tsx
-import React from 'react';
+'use client';
+
 
 export default function TablesPage() {
+
   return (
     <div>
+
       <h2 className="text-2xl font-bold mb-4">Your Tables</h2>
       <div className="bg-neutral-800 p-6 rounded-lg">
-         <p className="text-center text-neutral-400">
+        <p className="text-center text-neutral-400">
           Create a table
         </p>
         <p className="text-center text-sm text-neutral-500 mt-2">
@@ -16,6 +18,6 @@ export default function TablesPage() {
           Create
         </button>
       </div>
-    </div>
+    </div >
   );
 }

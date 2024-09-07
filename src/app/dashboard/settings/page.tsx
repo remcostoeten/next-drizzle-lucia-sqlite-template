@@ -8,7 +8,7 @@ export const revalidate = 3600
 
 async function SettingsContent() {
   const { user } = await validateRequest()
-  
+
   if (!user) {
     notFound()
   }
@@ -19,7 +19,7 @@ async function SettingsContent() {
     notFound()
   }
 
-  return <SettingsForm initialData={{...profile, username: profile.displayName}} userId={user.id} />
+  return <SettingsForm initialData={{ ...profile, username: profile.displayName }} userId={user.id} />
 }
 
 export default function SettingsPage() {

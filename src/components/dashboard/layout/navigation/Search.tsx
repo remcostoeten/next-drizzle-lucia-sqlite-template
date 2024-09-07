@@ -4,7 +4,7 @@ import { Dialog, DialogContent, DialogHeader, Input } from "@/components/ui"
 import { useKeyboardShortcut } from '@/core/hooks/useKeyboardShortcut'
 import { HelpCircle, LayoutDashboard, Search as SearchIcon } from 'lucide-react'
 import { useCallback, useState } from 'react'
-
+ 
 const searchOptions = [
   { icon: LayoutDashboard, label: 'Start a conversation', shortcut: 'C' },
   { icon: Search, label: 'Write a query', shortcut: 'Q' },

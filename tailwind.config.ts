@@ -12,14 +12,17 @@ const config: Config = {
   ],
   prefix: '',
   theme: {
-    container: {
-      center: true,
-      padding: '2rem',
-      screens: {
-        '2xl': '1400px',
-      },
-    },
     extend: {
+      backdropFilter: {
+        'none': 'none',
+      },
+      container: {
+        center: true,
+        padding: '2rem',
+        screens: {
+          '2xl': '1400px',
+        },
+      },
       colors: {
         // Theme colors
         primary: 'var(--brand)',
@@ -46,7 +49,7 @@ const config: Config = {
         placeholder: 'var(--grey-light)',
 
         // old part here
-        'body': 'var(--bg-body)',
+        'body-bg': 'var(--bg-body)',
         'bg-dropdown': 'var(--bg-dropdown)',
         modal: '#fff',
         'bg-modal-hover': 'var(--bg-modal-hover)',
@@ -66,10 +69,10 @@ const config: Config = {
         success: 'var(--green)',
         error: 'var(--red)',
         'menu-icon': 'var(--color-menu-icon)',
-        'input-focus': 'var(--grey-alt)',
+        'input-focus': 'var(--)',
         'badge-default': 'var(--badge-default)',
         'badge-hover': 'var(--grey)',
-        input: 'var(--bg-input)',
+        input: 'var(--black--lighter)',
         ring: 'hsl(var(--ring))',
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
@@ -150,6 +153,14 @@ const config: Config = {
       },
     },
   },
+  variants: {
+    extend: {
+      backdropFilter: ['responsive', 'hover', 'focus'],
+    },
+  },
+  plugins: [
+    require('@tailwindcss/aspect-ratio'),
+  ],
   plugins: [
     addVariablesForColors,
     function ({ matchUtilities, theme }) {

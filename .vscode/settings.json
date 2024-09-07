@@ -1,0 +1,5 @@
+{
+  "editor.renderWhitespace": "boundary",
+  "editor.cursorStyle": "underline",
+  "editor.fontFamily": "Geist mono"
+}
