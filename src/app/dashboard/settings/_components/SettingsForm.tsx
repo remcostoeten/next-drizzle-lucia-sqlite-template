@@ -1,13 +1,13 @@
 'use client'
 
 import { Button, Form, FormControl, FormField, FormItem, FormLabel, FormMessage, Input, Textarea } from "@/components/ui"
-import { useToast } from '@/components/ui/use-toast'
 import { deleteAccountAction, updateProfileAction } from '@/core/server/actions/auth/create-profile-action'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { motion } from 'framer-motion'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
+import toast from "react-hot-toast"
 import { z } from 'zod'
 import { AvatarUpload } from "../../../../../onboarding/_components/AvatarUpload"
 
@@ -30,7 +30,6 @@ type SettingsFormProps = {
 
 export default function SettingsForm({ initialData, userId }: SettingsFormProps) {
   const router = useRouter()
-  const { toast } = useToast()
   const [isDeleting, setIsDeleting] = useState(false)
 
   const form = useForm<z.infer<typeof profileSchema>>({
@@ -47,7 +46,7 @@ export default function SettingsForm({ initialData, userId }: SettingsFormProps)
     setIsDeleting(true)
     try {
       const result = await deleteAccountAction(userId)
-      if (result.success) {
+      if (result.error === undefined) {
         toast({
           title: "Account deleted",
           description: "Your account has been deleted successfully.",
@@ -70,7 +69,7 @@ export default function SettingsForm({ initialData, userId }: SettingsFormProps)
   return (
     <Form {...form}>
       <form action={updateProfileAction.bind(null, userId)} className="space-y-8">
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
@@ -79,7 +78,7 @@ export default function SettingsForm({ initialData, userId }: SettingsFormProps)
             control={form.control}
             name="avatar"
             render={({ field }) => (
-              <FormItem> 
+              <FormItem>
                 <FormLabel className="text-gray-300">Profile Picture</FormLabel>
                 <FormControl>
                   <AvatarUpload
@@ -93,7 +92,7 @@ export default function SettingsForm({ initialData, userId }: SettingsFormProps)
           />
         </motion.div>
 
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.1 }}
@@ -113,7 +112,7 @@ export default function SettingsForm({ initialData, userId }: SettingsFormProps)
           />
         </motion.div>
 
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.2 }}
@@ -133,7 +132,7 @@ export default function SettingsForm({ initialData, userId }: SettingsFormProps)
           />
         </motion.div>
 
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.3 }}
@@ -154,16 +153,16 @@ export default function SettingsForm({ initialData, userId }: SettingsFormProps)
         </motion.div>
 
         <div className="flex justify-between items-center">
-          <Button 
-            type="submit" 
+          <Button
+            type="submit"
             className="bg-blue-600 text-white hover:bg-blue-700 transition-colors duration-300"
           >
             Update Profile
           </Button>
-          <Button 
+          <Button
             type="button"
             onClick={handleDeleteAccount}
-            className="bg-red-600 text-white hover:bg-red-700 transition-colors duration-300" 
+            className="bg-red-600 text-white hover:bg-red-700 transition-colors duration-300"
             disabled={isDeleting}
           >
             {isDeleting ? 'Deleting...' : 'Delete Account'}

@@ -4,13 +4,13 @@ import { Dialog, DialogContent, DialogHeader, Input } from "@/components/ui"
 import { useKeyboardShortcut } from '@/core/hooks/useKeyboardShortcut'
 import { HelpCircle, LayoutDashboard, Search as SearchIcon } from 'lucide-react'
 import { useCallback, useState } from 'react'
- 
+
 const searchOptions = [
   { icon: LayoutDashboard, label: 'Start a conversation', shortcut: 'C' },
   { icon: Search, label: 'Write a query', shortcut: 'Q' },
   { icon: LayoutDashboard, label: 'Create a dashboard', shortcut: 'D' },
   { icon: LayoutDashboard, label: 'Create a table', shortcut: 'T' },
-  { icon: HelpCircle, label: 'Contact support', shortcut:  'S' },
+  { icon: HelpCircle, label: 'Contact support', shortcut: 'S' },
 ]
 
 export default function Search() {
@@ -35,7 +35,7 @@ export default function Search() {
         <Input
           type="search"
           placeholder="Search"
-          className="w-full py-2 pl-10 pr-12 bg-neutral-800 border border-neutral-700 rounded-md text-sm text-neutral-300 placeholder-neutral-500 focus:outline-none focus:ring-2 focus:ring-neutral-600"
+          className="w-full py-2  pr-12 bg-neutral-800 border border-neutral-700 rounded-md text-sm text-neutral-300 placeholder-neutral-500 focus:outline-none focus:ring-2 focus:ring-neutral-600"
           onClick={toggleSearch}
           readOnly
         />
@@ -52,7 +52,7 @@ export default function Search() {
               placeholder="Search your base..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full py-2 pl-10 pr-4 bg-neutral-800 border border-neutral-700 rounded-md text-sm text-neutral-300 placeholder-neutral-500 focus:outline-none focuwwws:ring-2 focus:ring-neutral-600"
+              className="w-full py-2  pr-4 bg-neutral-800 border border-neutral-700 rounded-md text-sm text-neutral-300 placeholder-neutral-500 focus:outline-none focuwwws:ring-2 focus:ring-neutral-600"
               autoFocus
             />
           </DialogHeader>

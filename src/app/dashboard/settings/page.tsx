@@ -1,13 +1,12 @@
-import { Skeleton } from "@/components/ui/Skeleton"
+import Skeleton from "@/components/ui/Skeleton"
 import { getProfile } from "@/data-access/profiles"
-import { validateRequest } from "@/lib/auth"
+import { getUser } from "@/data-access/users"
 import { notFound } from 'next/navigation'
-import { SettingsForm } from "./_components/SettingsForm"
+import SettingsForm from "./_components/SettingsForm"
 
 export const revalidate = 3600
-
-async function SettingsContent() {
-  const { user } = await validateRequest()
+async function SettingsContent({ userId }: { userId: number }) {
+  const user = await getUser(Number(userId));
 
   if (!user) {
     notFound()

@@ -9,8 +9,7 @@ export default function Providers({ children }: PageProps) {
       attribute="class"
       defaultTheme="dark"
       enableSystem
-      disableTransitionOnChange
-    >
+      disableTransitionOnChange children={undefined}    >
       <TooltipProvider>
         {children}
         <Toaster

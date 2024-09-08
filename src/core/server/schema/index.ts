@@ -1,14 +1,13 @@
 import { integer, sqliteTableCreator, text } from "drizzle-orm/sqlite-core";
 import { folders } from './folders/index';
-import { notes } from './notes';
 export const accountTypeEnum = ["email", "google", "github"] as const;
-export { folders, notes };
-export type Note = typeof notes.$inferSelect;
+export { folders };
+// export type Note = typeof notes.$inferSelect;
 
 const sqliteTable = sqliteTableCreator((name) => `app_${name}`);
 
 export const users = sqliteTable("user", {
-  id: integer( "id", { mode: "number" }).primaryKey({ autoIncrement: true }),
+  id: integer("id", { mode: "number" }).primaryKey({ autoIncrement: true }),
   email: text("email").unique(),
   username: text("username").unique(),
 });
@@ -17,7 +16,7 @@ export const accounts = sqliteTable("accounts", {
   id: integer("id", { mode: "number" }).primaryKey({ autoIncrement: true }),
   userId: integer("user_id", { mode: "number" })
     .references(() => users.id, { onDelete: "cascade" })
-    .unique() 
+    .unique()
     .notNull(),
   accountType: text("account_type", { enum: accountTypeEnum }).notNull(),
   githubId: text("github_id").unique(),
@@ -56,7 +55,7 @@ export const sessions = sqliteTable("session", {
     })
     .notNull(),
   expiresAt: integer("expires_at").notNull(),
-}); 
+});
 
 export type User = typeof users.$inferSelect;
 export type Profile = typeof profiles.$inferSelect;

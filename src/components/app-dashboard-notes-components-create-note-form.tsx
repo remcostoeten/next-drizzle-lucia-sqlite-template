@@ -1,14 +1,17 @@
 'use client'
 
 import { createNote } from '@/core/server/actions/notes'
+import { Button } from '@react-email/components'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
+import { Select, SelectContent, Textarea } from './ui'
+import { ShadInput } from './ui/ShadInput'
 
 export function CreateNoteForm({ folders }) {
   const [error, setError] = useState('')
   const router = useRouter()
 
-  async function handleSubmit(formData           : FormData) {
+  async function handleSubmit(formData: FormData) {
     setError('')
     try {
       await createNote(formData)
@@ -19,32 +22,33 @@ export function CreateNoteForm({ folders }) {
   }
 
   return (
-    <form action={handleSubmit} className="space-y-4">
-      <input
+    <form onSubmit={handleSubmit} className="space-y-4">
+      <ShadInput
         type="text"
         name="title"
         placeholder="Note Title"
         className="w-full p-2 border rounded"
         required
       />
-      <textarea
+      <Textarea
         name="content"
         placeholder="Note Content"
-        className="w-full p-2 border rounded"
         rows={4}
         required
       />
-      <select name="folderId" className="w-full p-2 border rounded" required>
-        <option value="">Select Folder</option>
-        {folders.map((folder) => (
-          <option key={folder.id} value={folder.id}>
-            {folder.name}
-          </option>
-        ))}
-      </select>
-      <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded">
+      <Select name="folderId" required>
+        <SelectContent>
+          <option value="">Select Folder</option>
+          {folders.map((folder) => (
+            <option key={folder.id} value={folder.id}>
+              {folder.name}
+            </option>
+          ))}
+        </SelectContent>
+      </Select>
+      <Button variant='outline' type="submit" >
         Create Note
-      </button>
+      </Button>
       {error && <p className="text-red-500">{error}</p>}
     </form>
   )

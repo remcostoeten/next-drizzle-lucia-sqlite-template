@@ -1,10 +1,10 @@
 'use client';
 
-import React, { useCallback } from 'react';
-import { useDropzone, FileRejection, DropzoneOptions } from 'react-dropzone';
-import { motion, AnimatePresence } from 'framer-motion';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { AnimatePresence, motion } from 'framer-motion';
 import { Camera, Upload, X } from 'lucide-react';
+import { useCallback } from 'react';
+import { DropzoneOptions, FileRejection, useDropzone } from 'react-dropzone';
 
 interface AvatarUploadProps {
   avatarPreview: string | null;
@@ -31,8 +31,14 @@ export function AvatarUpload({ avatarPreview, setAvatarPreview, setFieldValue }:
 
   const dropzoneOptions: DropzoneOptions = {
     onDrop,
-    accept: { 'image/*': [] },
+    accept: {
+      'image/*': ['.png', '.jpg', '.jpeg', '.gif', '.bmp', '.svg']
+    },
     maxFiles: 1,
+    multiple: false,
+    onDragEnter: () => { },
+    onDragOver: () => { },
+    onDragLeave: () => { },
   };
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone(dropzoneOptions);
@@ -81,4 +87,4 @@ export function AvatarUpload({ avatarPreview, setAvatarPreview, setFieldValue }:
       )}
     </div>
   );
-}
+}t

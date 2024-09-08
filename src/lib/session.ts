@@ -32,7 +32,7 @@ export const validateRequest = async (): Promise<
         sessionCookie.attributes,
       );
     }
-  } catch {}
+  } catch { }
   return result;
 };
 

@@ -67,7 +67,8 @@ const config: Config = {
         'button-default': 'var(--button-default)',
         'button-hover': 'var(--button-hover)',
         success: 'var(--green)',
-        error: 'var(--red)',
+        error:
+         'var(--red)',
         'menu-icon': 'var(--color-menu-icon)',
         'input-focus': 'var(--)',
         'badge-default': 'var(--badge-default)',

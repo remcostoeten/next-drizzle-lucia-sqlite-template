@@ -1,20 +1,30 @@
-import { getProfile } from "@/data-access/profiles"
-import { validateRequest } from "@/lib/auth"
-import { redirect } from 'next/navigation'
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { getProfile } from "@/data-access/profiles"
+import { validateRequest } from "@/lib/session"
 import { User } from "lucide-react"
+import { redirect } from 'next/navigation'
 
 export default async function DashboardPage() {
   const { user } = await validateRequest()
-  
+
   if (!user) {
     redirect('/login')
   }
 
   const profile = await getProfile(user.id)
 
+  function greeting() {
+    const hour = new Date().getHours();
+    if (hour < 12) {
+      return 'Good morning';
+    } else if (hour < 18) {
+      return 'Good afternoon';
+    } else {
+      return 'Good evening';
+    }
+  }
 
 
   return (
@@ -44,7 +54,7 @@ export default async function DashboardPage() {
             <p className="text-gray-300">{profile?.bio || 'Welcome to your dashboard. Here you can manage your projects and settings.'}</p>
           </CardContent>
           <CardFooter>
-            <Button 
+            <Button
               className="bg-blue-600 hover:bg-blue-700 text-white"
             >
               View Projects

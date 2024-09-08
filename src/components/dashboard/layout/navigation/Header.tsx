@@ -1,21 +1,31 @@
 'use client';
 
-import { HeaderProps } from '@/components/dashboard/layout/navigation/navigation.types';
-import Logo from '@/components/theme/Logo';
-import { Button } from '@/components/ui/button';
-import Input from '@/components/ui/input';
-import { searchOptions } from '@/core/config/search-options';
-import { Bell, HelpCircle } from 'lucide-react';
-import Link from 'next/link';
-import UserMenu from './UserMenu';
+import Input from "@/components/elements/Search";
+import Logo from "@/components/theme/Logo";
+import { Button } from "@/components/ui/button";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import { searchOptions } from "@/core/config/search-options";
+import { Bell, HelpCircle } from "lucide-react";
+import Link from "next/link";
+import UserMenu from "./UserMenu";
 
-export default function Header({ user }: HeaderProps) {
+type User = {
+  id: string;
+  username: string;
+  email: string;
+} | null;
+
+type HeaderProps = {
+  user: User;
+};
+
+export function Header({ user }: HeaderProps) {
   return (
-    <header className="bg-black text-white p-4">
-      <div className="mx-auto flex justify-between items-center">
+    <header className="bg-black text-white p-4 border-b ">
+      <div className="mx-auto flex justify-between items-center max-w-7xl">
         <Logo />
 
-        <div className="flex-1 mx-4">
+        <div className="flex-1 mx-4 flex justify-center">
           <Input
             isSearch={true}
             backdropOpacity={0.4}
@@ -23,16 +33,33 @@ export default function Header({ user }: HeaderProps) {
             backdropColor='black'
             searchOptions={searchOptions}
             hasBlur={true}
+            width="md"
+            className="max-w-xl w-full"
           />
         </div>
 
         <div className="flex items-center space-x-4">
-          <button className="text-neutral-300 hover:text-white" aria-label="Help">
-            <HelpCircle size={20} />
-          </button>
-          <button className="text-neutral-300 hover:text-white" aria-label="Notifications">
-            <Bell size={20} />
-          </button>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <button className="text-neutral-300 hover:text-white" aria-label="Help">
+                <HelpCircle size={20} />
+              </button>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Help</p>
+            </TooltipContent>
+          </Tooltip>
+
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <button className="text-neutral-300 hover:text-white" aria-label="Notifications">
+                <Bell size={20} />
+              </button>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Notifications</p>
+            </TooltipContent>
+          </Tooltip>
 
           {user ? (
             <UserMenu user={user} />
@@ -44,5 +71,5 @@ export default function Header({ user }: HeaderProps) {
         </div>
       </div>
     </header>
-  )
+  );
 }

@@ -11,7 +11,7 @@ export default async function EmailSignInPage() {
         <p className="text-zinc-400">Welcome back! Please sign in to your account.</p>
       </div>
 
-      <EmailSignInForm 
+      <EmailSignInForm
         googleAuthEnabled={config.googleAuthEnabled}
         githubAuthEnabled={config.githubAuthEnabled}
       />

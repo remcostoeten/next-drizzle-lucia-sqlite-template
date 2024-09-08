@@ -1,22 +1,16 @@
-import { integer, sqliteTableCreator, text } from "drizzle-orm/sqlite-core";
-import { sql } from "drizzle-orm";
-import { users } from "..";
+import { integer, sqliteTable, text } from 'drizzle-orm/sqlite-core';
+import { users } from '..';
 
-const sqliteTable = sqliteTableCreator((name) => `app_${name}`);
-
-export const folders = sqliteTable("folders", {
-  id: text("id").primaryKey(),
-  userId: text("user_id")
-    .notNull()
-    .references(() => users.id),
-  name: text("name").notNull(),
-  parentId: text("parent_id").references(() => folders.id),
-  createdAt: integer("created_at")
-    .notNull()
-    .default(sql`(strftime('%s', 'now'))`),
-  updatedAt: integer("updated_at")
-    .notNull()
-    .default(sql`(strftime('%s', 'now'))`),
+export const folders = sqliteTable('folder', {
+  id: integer('id', { mode: 'number' }).primaryKey({ autoIncrement: true }),
+  name: text('name').notNull(),
+  description: text('description'),
+  color: text('color').notNull(),
+  userId: integer('user_id', { mode: 'number' })
+    .references(() => users.id, { onDelete: 'cascade' })
+    .notNull(),
+  createdAt: integer('created_at', { mode: 'timestamp' }).notNull().defaultNow(),
+  updatedAt: integer('updated_at', { mode: 'timestamp' }).notNull().defaultNow(),
 });
 
 export type Folder = typeof folders.$inferSelect;

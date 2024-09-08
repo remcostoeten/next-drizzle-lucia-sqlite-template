@@ -6,7 +6,7 @@ import NextTopLoader from "nextjs-toploader";
 import { ReactNode } from "react";
 import "../styles/app.scss";
 
-import { Toaster } from "@/components/ui/toaster";
+import { Toaster } from "react-hot-toast";
 import Providers from "../components/theme/providers";
 
 const geistSans = localFont({

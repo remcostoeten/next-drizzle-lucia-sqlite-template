@@ -1,30 +1,42 @@
 'use client'
 
-import { useState } from 'react'
-import { useRouter } from 'next/navigation'
-import Link from 'next/link'
-import { ChevronDown, LogOut, Settings } from 'lucide-react'
+import { Avatar, AvatarFallback } from "@/components/ui/avatar"
+import { Button } from "@/components/ui/button"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 import { Switch } from "@/components/ui/switch"
+import { LogOut, Settings } from "lucide-react"
+import { useTheme } from "next-themes"
+import Link from "next/link"
+import { useRouter } from "next/navigation"
+import { useEffect, useState } from 'react'
 
-interface User {
-  id: string;
-  name: string;
-  email: string;
-  image?: string;
-}
+type User = {
+  name?: string;
+  email?: string;
+  username?: string;
+} | null | undefined
 
-interface UserMenuProps {
-  user: User
+type UserMenuProps = {
+  user: User;
 }
 
 export default function UserMenu({ user }: UserMenuProps) {
-  const [isOpen, setIsOpen] = useState(false)
-  const [isDarkTheme, setIsDarkTheme] = useState(true)
+  const [mounted, setMounted] = useState(false)
+  const { theme, setTheme } = useTheme()
   const router = useRouter()
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
 
   const handleSignOut = async () => {
     try {
-      const response = await fetch('/api/sign-out', { method: 'GET' })
+      const response = await fetch('/api/sign-out', { method: 'POST' })
       if (response.ok) {
         router.push('/signed-out')
       } else {
@@ -35,54 +47,60 @@ export default function UserMenu({ user }: UserMenuProps) {
     }
   }
 
-  return (
-    <div className="relative">
-      <button
-        onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center space-x-2 bg-[#1e1e1e] rounded-full p-1 pr-3 focus:outline-none focus:ring-2 focus:ring-gray-500"
-      >
-        <div className="w-8 h-8 bg-gray-700 rounded-full flex items-center justify-center text-sm font-medium">
-          {user.name.charAt(0).toUpperCase()}
-        </div>
-        <ChevronDown size={16} className="text-gray-400" />
-      </button>
+  const toggleTheme = () => {
+    setTheme(theme === 'dark' ? 'light' : 'dark')
+  }
 
-      {isOpen && (
-        <div className="absolute right-0 mt-2 w-64 bg-[#1e1e1e] rounded-md shadow-lg py-1 z-10">
-          <div className="px-4 py-3 border-b border-gray-700">
-            <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 bg-gray-700 rounded-full flex items-center justify-center text-sm font-medium">
-                {user.name.charAt(0).toUpperCase()}
-              </div>
-              <div>
-                <p className="text-sm font-medium text-white">{user.name}</p>
-                <p className="text-xs text-gray-400">{user.email}</p>
-              </div>
-            </div>
-          </div>
-          <div className="py-1">
-            <Link href="/account-settings" className="px-4 py-2 text-sm text-white hover:bg-gray-800 flex items-center justify-between">
-              <span>Account Settings</span>
-              <Settings size={16} />
-            </Link>
-            <div className="px-4 py-2 text-sm text-white hover:bg-gray-800 flex items-center justify-between">
-              <span>Theme</span>
-              <Switch
-                checked={isDarkTheme}
-                onCheckedChange={setIsDarkTheme}
-                className="data-[state=checked]:bg-gray-600"
-              />
-            </div>
-            <button
-              onClick={handleSignOut}
-              className="w-full px-4 py-2 text-sm text-white hover:bg-gray-800 flex items-center justify-between"
-            >
-              <span>Log out</span>
-              <LogOut size={16} />
-            </button>
+  const getInitials = (name: string) => {
+    return name.split(' ').map(n => n[0]).join('').toUpperCase()
+  }
+
+  const userInitials = user?.username ? getInitials(user.username) : '💩'
+
+  if (!mounted) {
+    return null
+  }
+
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="ghost" className="relative h-8 w-8 rounded-full">
+          <Avatar className="h-8 w-8">
+            <AvatarFallback>{userInitials}</AvatarFallback>
+          </Avatar>
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent className="w-56" align="end" forceMount>
+        <div className="flex items-center gap-2 p-2">
+          <Avatar className="h-10 w-10 border">
+            <AvatarFallback>{userInitials}</AvatarFallback>
+          </Avatar>
+          <div className="flex flex-col space-y-1">
+            <p className="text-sm font-medium leading-none">{user?.username || 'Anonymous'}</p>
+            <p className="text-xs leading-none text-muted-foreground">
+              {user?.email || 'No email provided'}
+            </p>
           </div>
         </div>
-      )}
-    </div>
+        <DropdownMenuItem asChild>
+          <Link href="/account-settings" className="flex justify-between items-center cursor-pointer">
+            Account Settings
+            <Settings className="h-4 w-4" />
+          </Link>
+        </DropdownMenuItem>
+        <DropdownMenuItem onSelect={(e) => e.preventDefault()} className="flex justify-between items-center cursor-pointer">
+          <span>Theme</span>
+          <Switch
+            checked={theme === 'dark'}
+            onCheckedChange={toggleTheme}
+            className="data-[state=checked]:bg-primary"
+          />
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={handleSignOut} className="flex justify-between items-center cursor-pointer">
+          Log out
+          <LogOut className="h-4 w-4" />
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
   )
 }

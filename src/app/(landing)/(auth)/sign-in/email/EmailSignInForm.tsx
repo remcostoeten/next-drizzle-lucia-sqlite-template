@@ -1,19 +1,19 @@
 'use client'
 
-import { useState } from 'react'
-import { useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { z } from 'zod'
-import { useServerAction } from 'zsa-react'
-import { signInAction } from '@/core/server/actions'
 import { LoaderButton } from '@/components/loader-button'
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
-import { Input } from '@/components/ui/input'
+import { ShadInput } from '@/components/ui/ShadInput'
 import { useToast } from '@/components/ui/use-toast'
+import { signInAction } from '@/core/server/actions'
+import { zodResolver } from '@hookform/resolvers/zod'
 import { Eye, EyeOff, Github, Mail, Terminal } from 'lucide-react'
+import { useState } from 'react'
+import { useForm } from 'react-hook-form'
+import { z } from 'zod'
+import { useServerAction } from 'zsa-react'
 
 const loginSchema = z.object({
   identifier: z.string().min(1, 'Email or username is required'),
@@ -70,7 +70,7 @@ export default function EmailSignInForm({ googleAuthEnabled, githubAuthEnabled }
               <FormItem>
                 <FormLabel className="text-zinc-300">Email or Username</FormLabel>
                 <FormControl>
-                  <Input {...field} className="bg-zinc-800 border-zinc-700 text-white placeholder-zinc-500" placeholder="Enter your email or username" type="text" />
+                  <ShadInput {...field} className="bg-zinc-800 border-zinc-700 text-white placeholder-zinc-500" placeholder="Enter your email or username" type="text" />
                 </FormControl>
                 <FormMessage className="text-red-400" />
               </FormItem>
@@ -85,11 +85,11 @@ export default function EmailSignInForm({ googleAuthEnabled, githubAuthEnabled }
                 <FormLabel className="text-zinc-300">Password</FormLabel>
                 <FormControl>
                   <div className="relative">
-                    <Input 
-                      {...field} 
-                      className="bg-zinc-800 border-zinc-700 text-white placeholder-zinc-500 pr-10" 
-                      placeholder="Enter your password" 
-                      type={showPassword ? 'text' : 'password'} 
+                    <ShadInput
+                      {...field}
+                      className="bg-zinc-800 border-zinc-700 text-white placeholder-zinc-500 pr-10"
+                      placeholder="Enter your password"
+                      type={showPassword ? 'text' : 'password'}
                     />
                     <button
                       type="button"
