@@ -1,3 +1,4 @@
+export * as Input from '../elements/Search';
 export * from './alert';
 export * from './avatar';
 export * from './button';
@@ -10,6 +11,7 @@ export * from './input';
 export * from './kbd';
 export * from './label';
 export * from './popover';
+export * from './select';
 export * from './Skeleton';
 export * from './switch';
 export * from './textarea';
